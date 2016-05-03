@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Angular JS</title>
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-route/angular-route.js"></script>
+</head>
+
+<body ng-app="myApp">
+    <div class="container-fluid">
+        <a href="#addStudents">Add Students</a>
+        <a href="#viewStudents">View Students</a>
+        <div ng-view></div>
+        <script type="text/ng-template" id="addStudents.html">
+            <h2>Add Student</h2> {{message}}
+        </script>
+        <script type="text/ng-template" id="viewStudent.html">
+            <h2>View Student</h2> {{message}}
+        </script>
+    </div>
+    <script>
+    var app = angular.module("myApp", ["ngRoute"]);
+
+    app.config(["$routeProvider", function($routeProvider) {
+
+        $routeProvider.when("/addStudents", {
+            templateUrl: "addStudents.html",
+            controller: "AddStudentsController"
+        }).when("/viewStudents", {
+            templateUrl: "viewStudent.html",
+            controller: "ViewStudentsController"
+        }).
+        otherwise({
+            redirectTo: "/addStudents"
+        })
+    }]);
+
+    app.controller("AddStudentsController", function($scope) {
+        $scope.message = "add student";
+    });
+
+    app.controller("ViewStudentsController", function($scope) {
+        $scope.message = "view student";
+    });
+    </script>
+</body>
+
+</html>

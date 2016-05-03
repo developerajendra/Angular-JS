@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+body {
+    background-color: #152d7c;
+    color: #fff
+}
+
+input {
+    padding: 15px 10px;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: none;
+    color: #000;
+}
+
+.submit {
+    background: #ddd;
+    color: #000;
+}
+
+.to-do-list {
+    background: #ddd;
+    margin: 1px 0;
+    color: #152d7c;
+    padding: 10px;
+    overflow: hidden;
+}
+
+.text {
+    float: left;
+    width: 80%;
+}
+
+.text.focus {
+    outline: solid 1px #568DC5;
+    padding: 5px;
+}
+
+.toast {
+    background: #000;
+    padding: 10px 25px 2px 10px;
+    border-radius: 5px;
+    width: auto;
+    display: inline-block;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    bottom: 10px;
+    display: none;
+    left: 10px;
+}
+
+.showToast {
+    display: block;
+    -webkit-animation: 3s toast;
+    opacity: 0;
+}
+
+@-webkit-keyframes toast {
+    0% {
+        display: block;
+        background: blue;
+        opacity: 0;
+        left: -100px;
+    }
+    50% {
+        opacity: 1;
+        left: 10px;
+    }
+    100% {
+        display: none;
+        background: red;
+        opacity: 0;
+        left: -100px;
+    }
+}
+
+.ui-controls {
+    float: right;
+    width: 74px;
+    margin-top: 3px;
+}
+
+.ui-controls > span {
+    float: left;
+    list-style: none;
+    background: url("../images/icons.png") no-repeat 0 0;
+    width: 30px;
+    height: 30px;
+    margin: 0 7px 0 0;
+    opacity: 0.7;
+    background-size: 253%;
+    transition: 0.7s;
+    cursor: pointer;
+}
+
+.ui-controls li:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.ui-controls .edit {
+    background-position: -22px 0px;
+}
+
+.ui-controls .save {
+    background-position: 4px 0px;
+}
+
+.ui-controls .remove {
+    background-position: -49px 0px;
+}

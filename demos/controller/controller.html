@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Angular JS</title>
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-route/angular-route.js"></script>
+    <style>
+    body {
+        padding: 10px;
+    }
+    </style>
+</head>
+
+<body ng-app="">
+    <div class="container" ng-controller="myController"></div>
+    <script>
+    function myController($scope) {
+        console.log($scope);
+    }
+    </script>
+</body>
+
+</html>
