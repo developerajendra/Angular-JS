@@ -1,0 +1,18 @@
+Test Cases ToDo
+
+	#User can post 
+	#User can edit 
+	#User can save 
+	#User can delete
+	#Confirmation message while deleting 
+	#Sort by date
+	#Show toast message on every action
+	#Save todo on browser refresh
+	#Show empty message
+	#IF input form is empty while submit show error message
+	#Re order the todo
+	#User can say todo completed
+	#Move completed todo to pending todo
+	#Removed complete dodo
+	#Duplicate todo can be there
+	
