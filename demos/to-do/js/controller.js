@@ -1,26 +1,92 @@
-app.controller("toDoController", function($scope) {
-    var todoList = this;
-    todoList.toDos = ["My demo todo...."];
+app.controller("toDoController",["$scope","$timeout", function($scope,$timeout) {
+    var vm = this;
+    vm.toDos = ["My demo todo...."];
+    vm.toastMessage = "some message";
+    vm.showToast = false;
+ 
 
     //Add To Do list
-    todoList.submitForm = function() {
-        if (todoList.myToDo != null && todoList.myToDo != '') {
-            todoList.toDos.push(todoList.myToDo);
+    vm.submitForm = function() {
+        if (vm.myToDo != null && vm.myToDo != '') {
+            vm.toDos.push(vm.myToDo);
+
+            //show Toast
+            vm.toggleToast("Submit todo...");
+
+           
+            //Update data on localstorage
+            localStorage.setItem("elem",vm.toDos);
         }
-        todoList.myToDo = "";
-        todoList.toast = true;
+        vm.myToDo = "";
+        vm.toast = true;
     }
+
 
 
     //Remove To-DO
-    todoList.remove = function(todo) {
-        todoList.toDos.splice(todoList.toDos.indexOf(todo), 1);
+    vm.remove = function(todo) {
+        vm.toDos.splice(vm.toDos.indexOf(todo), 1);
+
+         //show Toast
+         vm.toggleToast("Remove todo...");
+
+         //Update data on localstorage
+        localStorage.setItem("elem",vm.toDos);
+
     }
 
     //Edit To-Do.
-    todoList.edit = function(that, dodo) {
+    vm.edit = function(that, dodo) {
         that.clicked = !that.clicked;
+
+        console.log(dodo);
+
+         //show Toast
+         vm.toggleToast("Edit todo...");
+
+        if (that.clicked) {
+            //Toast message
+            vm.toastMessage = "Edit todo..";
+        } else {
+            //Toast message
+            vm.toastMessage = "Todo saved..";
+        }
+
     }
 
 
-});
+    //Google toast
+    vm.toggleToast = function(toastMessage){
+
+        //Toast message
+        vm.toastMessage = toastMessage;
+         //show Toast
+         vm.showToast = true;
+
+         $timeout(function() {
+             vm.showToast = false;
+         }, 2000); 
+    }
+
+
+    //Load todo's from loalstorage
+    var elem =  localStorage.getItem("elem");
+    if(elem){
+        vm.toDos = elem.split(",");
+    }
+     
+
+}]);
+
+
+app.directive("paperToast", ["$timeout", function() {
+ 
+    return {
+        restrict: "E",
+        scope: {
+            showtoast: '=showtoast',
+            message: "=message"
+        },
+        template: '<div class="toast" ng-class="{showToast:showtoast}" ng-show="showtoast"><p>{{message}}</p></div>'
+    }
+}]);

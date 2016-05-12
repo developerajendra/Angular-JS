@@ -39,6 +39,14 @@ input {
     width: 80%;
 }
 
+.date-created{
+    float: left;
+    font-size: 0.750em;
+    font-style: italic;
+    padding: 19px 0 0;
+    color: #0B2473;
+}
+
 .text.focus {
     outline: solid 1px #568DC5;
     padding: 5px;
@@ -59,7 +67,7 @@ input {
 
 .showToast {
     display: block;
-    -webkit-animation: 3s toast;
+    -webkit-animation: 2s toast;
     opacity: 0;
 }
 
@@ -70,9 +78,13 @@ input {
         opacity: 0;
         left: -100px;
     }
-    50% {
-        opacity: 1;
+    10% {
         left: 10px;
+        opacity: 1;
+    }
+    90% {
+        left: 10px;
+        opacity: 1;
     }
     100% {
         display: none;

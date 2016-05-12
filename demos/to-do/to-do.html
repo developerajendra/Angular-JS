@@ -27,15 +27,14 @@
                 <div class="text" ng-class="{focus:this.clicked}" contenteditable="{{this.clicked}}">
                     {{todo}}
                 </div>
+                <div class="date-created">Created on : 12-05-2016</div>
                 <div class="ui-controls">
                     <span ng-click="todoCont.edit(this,todo);" ng-class="{save:this.clicked ,edit:!this.clicked }"></span>
                     <span class="remove" ng-click="todoCont.remove(todo)"></span>
                 </div>
             </li>
         </ul>
-        <div class="toast" ng-class="{showToast:todoCont.toast}">
-            <p>To do created...</p>
-        </div>
+        <paper-toast showtoast="todoCont.showToast" message="todoCont.toastMessage"></paper-toast>
     </div>
     <script src="js/app.js"></script>
     <script src="js/controller.js"></script>
