@@ -1,0 +1,11 @@
+app.config(["$routeProvider",function($routeProvider){
+	$routeProvider.when("/",{
+		templateUrl:"views/current-todo.html",
+		controller:"toDoController"
+	}).when("/complete",{
+		templateUrl:"views/todo-complete.html",
+		controller:"toDoController"
+	}).otherwise({
+		redirectTo:"/"
+	})
+}]);
