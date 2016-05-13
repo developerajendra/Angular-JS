@@ -1,9 +1,10 @@
-app.controller("toDoController",["$scope","$timeout", function($scope,$timeout) {
+app.controller("toDoController",["$scope","$timeout","$location", function($scope,$timeout,$location) {
     var vm = this;
     vm.toDos = ["My demo todo...."];
     vm.toastMessage = "some message";
     vm.showToast = false;
- 
+
+
 
     //Add To Do list
     vm.submitForm = function() {
@@ -74,10 +75,19 @@ app.controller("toDoController",["$scope","$timeout", function($scope,$timeout) 
     if(elem){
         vm.toDos = elem.split(",");
     }
-     
 
+    //Active current tab
+    vm.isActive = function(activeElement){
+        var active = (activeElement == $location.path());
+        return active;
+    }
+      
 }]);
 
+
+app.controller("navController",[],function(){
+
+});
 
 app.directive("paperToast", ["$timeout", function() {
  

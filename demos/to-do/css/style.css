@@ -9,7 +9,41 @@ li {
 
 body {
     background-color: #152d7c;
-    color: #fff
+    color: #fff;
+    padding: 10px;
+}
+h1{
+    float: left;
+}
+/*Navigation
+---------------------*/
+.nav-todo{
+    float: right;
+    margin: 25px 0 0;
+}
+.nav-todo ul li{
+    float: left;
+    margin: 1px;
+}
+
+.nav-todo ul li:last-child a{
+    border-radius: 0  10px 0 0;
+}
+.nav-todo ul li a{
+    color: #E9DEE2;
+    padding: 10px;
+    background: #2E438A;
+    text-decoration: none;
+    -webkit-transition:0.3s;
+}
+.nav-todo ul li.active a,.nav-todo ul li a:hover{
+    background: #0F1C46;
+}
+
+/*ToDo
+------------------------*/
+.todo-container ul li:last-child{
+     border-radius: 0  0 0 10px ;
 }
 
 input {
