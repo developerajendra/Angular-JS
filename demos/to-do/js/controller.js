@@ -1,38 +1,46 @@
-app.controller("toDoController",["$scope","$timeout","$location", function($scope,$timeout,$location) {
+app.controller("toDoController", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
     var vm = this;
-    vm.toDos = ["My demo todo...."];
+    vm.toDos = [{
+        id: 0,
+        text: "hello world...",
+        completed: false
+    }];
+    vm.myToDo = null;
+
     vm.toastMessage = "some message";
     vm.showToast = false;
-
-
 
     //Add To Do list
     vm.submitForm = function() {
         if (vm.myToDo != null && vm.myToDo != '') {
-            vm.toDos.push(vm.myToDo);
 
+            vm.toDos.push({
+                id: vm.toDos.length,
+                text: vm.myToDo,
+                completed: false
+            });
+
+            console.log(vm.toDos);
             //show Toast
             vm.toggleToast("Submit todo...");
 
-           
+
             //Update data on localstorage
-            localStorage.setItem("elem",vm.toDos);
+            // localStorage.setItem("elem", vm.toDos);
         }
         vm.myToDo = "";
         vm.toast = true;
     }
 
-
-
     //Remove To-DO
     vm.remove = function(todo) {
         vm.toDos.splice(vm.toDos.indexOf(todo), 1);
 
-         //show Toast
-         vm.toggleToast("Remove todo...");
+        //show Toast
+        vm.toggleToast("Remove todo...");
 
-         //Update data on localstorage
-        localStorage.setItem("elem",vm.toDos);
+        //Update data on localstorage
+        localStorage.setItem("elem", vm.toDos);
 
     }
 
@@ -42,8 +50,8 @@ app.controller("toDoController",["$scope","$timeout","$location", function($scop
 
         console.log(dodo);
 
-         //show Toast
-         vm.toggleToast("Edit todo...");
+        //show Toast
+        vm.toggleToast("Edit todo...");
 
         if (that.clicked) {
             //Toast message
@@ -55,42 +63,44 @@ app.controller("toDoController",["$scope","$timeout","$location", function($scop
 
     }
 
-
     //Google toast
-    vm.toggleToast = function(toastMessage){
+    vm.toggleToast = function(toastMessage) {
 
         //Toast message
         vm.toastMessage = toastMessage;
-         //show Toast
-         vm.showToast = true;
+        //show Toast
+        vm.showToast = true;
 
-         $timeout(function() {
-             vm.showToast = false;
-         }, 2000); 
+        $timeout(function() {
+            vm.showToast = false;
+        }, 2000);
     }
 
 
     //Load todo's from loalstorage
-    var elem =  localStorage.getItem("elem");
-    if(elem){
-        vm.toDos = elem.split(",");
-    }
+    /*  var elem = localStorage.getItem("elem");
+      if (elem) {
+          vm.toDos = elem.split(",");
+      }*/
 
     //Active current tab
-    vm.isActive = function(activeElement){
+    vm.isActive = function(activeElement) {
         var active = (activeElement == $location.path());
         return active;
     }
-      
+
+    vm.change = function(that, status) {
+        that.completed = status
+    }
+
+
 }]);
 
 
-app.controller("navController",[],function(){
 
-});
 
 app.directive("paperToast", ["$timeout", function() {
- 
+
     return {
         restrict: "E",
         scope: {

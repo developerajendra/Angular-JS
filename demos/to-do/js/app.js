@@ -1,1 +1,1 @@
-var app = angular.module("toDo",["ngRoute"]);
+var app = angular.module("toDo",["ngRoute","ui.bootstrap"]);
