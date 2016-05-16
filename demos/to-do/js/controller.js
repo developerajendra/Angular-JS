@@ -1,14 +1,16 @@
-app.controller("toDoController", ["$scope", "$timeout", "$location", function($scope, $timeout, $location) {
+app.controller("toDoController", ["$scope", "$timeout", "$location", "$http", function($scope, $timeout, $location, $http) {
     var vm = this;
-    vm.toDos = [{
-        id: 0,
-        text: "hello world...",
-        completed: false
-    }];
     vm.myToDo = null;
-
     vm.toastMessage = "some message";
     vm.showToast = false;
+
+
+    //Render default JSON
+    $http.get("data/todo.json").success(function(data) {
+        vm.toDos = data;
+    });
+
+
 
     //Add To Do list
     vm.submitForm = function() {
