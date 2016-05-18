@@ -1,14 +1,14 @@
-<div class="todo-container todo-complete" ng-init="name=122">
+<div class="todo-container todo-complete" ng-init="name=122" ng-controller="completeController as completeCont">
     <ul>
-        <li class="to-do-list" ng-if="todo.completed == true" ng-repeat="todo in todoCont.toDos | filter:todoCompleted">
+        <li class="to-do-list" ng-if="todo.completed == true" ng-repeat="todo in completeCont.toDos | filter:todoCompleted">
             <div class="text" ng-class="{focus:this.clicked}" contenteditable="{{this.clicked}}">
                 {{todo.text}}
             </div>
-            <div class="date-created">Created on : 12-05-2016</div>
+            <div class="date-created">Created on : {{todo.createdOn}}</div>
             <div class="ui-controls">
-                <span class="remove" ng-click="todoCont.remove(todo)"></span>
+                <span class="remove" ng-click="completeCont.remove(todo)"></span>
             </div>
         </li>
     </ul>
-    <paper-toast showtoast="todoCont.showToast" message="todoCont.toastMessage"></paper-toast>
+    <paper-toast showtoast="completeCont.showToast" message="completeCont.toastMessage"></paper-toast>
 </div>

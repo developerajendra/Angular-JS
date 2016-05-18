@@ -1,56 +1,50 @@
-app.controller("toDoController", ["$scope", "$timeout", "$location", "$http", function($scope, $timeout, $location, $http) {
+//View changes controller
+app.controller("viewController", ["$location", function($location) {
+    var vm = this;
+    //Active current tab
+    vm.isActive = function(activeElement) {
+        var active = (activeElement == $location.path());
+        return active;
+    }
+}]);
+
+
+
+//To-do Controller
+app.controller("toDoController", ["$scope", "$location", "getTodo", "$timeout", "ngDialog", "postDate", function($scope, $location, getTodo, $timeout, ngDialog, postDate) {
+
+    //Variables
     var vm = this;
     vm.myToDo = null;
     vm.toastMessage = "some message";
     vm.showToast = false;
 
-
     //Render default JSON
-    $http.get("data/todo.json").success(function(data) {
-        vm.toDos = data;
+    getTodo.then(function(data) {
+        vm.toDos = data.data;
     });
-
-
 
     //Add To Do list
     vm.submitForm = function() {
         if (vm.myToDo != null && vm.myToDo != '') {
 
-            vm.toDos.push({
+            vm.toDos.unshift({
                 id: vm.toDos.length,
                 text: vm.myToDo,
-                completed: false
+                completed: false,
+                createdOn: postDate.now()
             });
 
-            console.log(vm.toDos);
             //show Toast
             vm.toggleToast("Submit todo...");
-
-
-            //Update data on localstorage
-            // localStorage.setItem("elem", vm.toDos);
         }
         vm.myToDo = "";
         vm.toast = true;
     }
 
-    //Remove To-DO
-    vm.remove = function(todo) {
-        vm.toDos.splice(vm.toDos.indexOf(todo), 1);
-
-        //show Toast
-        vm.toggleToast("Remove todo...");
-
-        //Update data on localstorage
-        localStorage.setItem("elem", vm.toDos);
-
-    }
-
     //Edit To-Do.
     vm.edit = function(that, dodo) {
         that.clicked = !that.clicked;
-
-        console.log(dodo);
 
         //show Toast
         vm.toggleToast("Edit todo...");
@@ -62,8 +56,97 @@ app.controller("toDoController", ["$scope", "$timeout", "$location", "$http", fu
             //Toast message
             vm.toastMessage = "Todo saved..";
         }
-
     }
+
+    //Toogle toast
+    vm.toggleToast = function(toastMessage) {
+
+        //Toast message
+        vm.toastMessage = toastMessage;
+        //show Toast
+        vm.showToast = true;
+
+        $timeout(function() {
+            vm.showToast = false;
+        }, 2000);
+    }
+
+
+    //Complete todo
+    vm.change = function(that, status) {
+        //Dialog message
+        $scope.message = "Is your todo completed?";
+
+        //Dialog open
+        ngDialog.open({
+            scope: $scope,
+            template: "views/dialog-confirmation.html",
+            className: 'ngdialog-theme-default'
+        });
+
+
+        //Close dialog
+        $scope.closeDialog = function(value) {
+            if (value) {
+                that.completed = status;
+
+                //show Toast
+                vm.toggleToast("Todo completed...");
+
+            } else {
+                //show Toast
+                vm.toggleToast("Cancled...");
+            }
+            ngDialog.close();
+        }
+    }
+
+
+}]);
+
+
+//To-do Complete controller
+app.controller("completeController", ["$scope", "getTodo", "$timeout", "ngDialog", function($scope, getTodo, $timeout, ngDialog) {
+    var vm = this;
+
+    //Render default JSON of completed todo
+    getTodo.then(function(data) {
+        vm.toDos = data.data;
+    });
+
+    //Remove To-DO
+    vm.remove = function(todo) {
+
+        //Dialog message
+        $scope.message = "Do you want to remove todo?";
+
+        //Dialog open
+        ngDialog.open({
+            scope: $scope,
+            template: "views/dialog-confirmation.html",
+            className: 'ngdialog-theme-default'
+        });
+
+
+        //Close dialog
+        $scope.closeDialog = function(value) {
+            if (value) {
+                vm.toDos.splice(vm.toDos.indexOf(todo), 1);
+
+                //show Toast
+                vm.toggleToast("Removed todo...");
+
+            } else {
+                //show Toast
+                vm.toggleToast("Cancled...");
+            }
+
+            ngDialog.close();
+        }
+    }
+
+
+
 
     //Google toast
     vm.toggleToast = function(toastMessage) {
@@ -78,37 +161,4 @@ app.controller("toDoController", ["$scope", "$timeout", "$location", "$http", fu
         }, 2000);
     }
 
-
-    //Load todo's from loalstorage
-    /*  var elem = localStorage.getItem("elem");
-      if (elem) {
-          vm.toDos = elem.split(",");
-      }*/
-
-    //Active current tab
-    vm.isActive = function(activeElement) {
-        var active = (activeElement == $location.path());
-        return active;
-    }
-
-    vm.change = function(that, status) {
-        that.completed = status
-    }
-
-
-}]);
-
-
-
-
-app.directive("paperToast", ["$timeout", function() {
-
-    return {
-        restrict: "E",
-        scope: {
-            showtoast: '=showtoast',
-            message: "=message"
-        },
-        template: '<div class="toast" ng-class="{showToast:showtoast}" ng-show="showtoast"><p>{{message}}</p></div>'
-    }
 }]);

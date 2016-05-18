@@ -1,1 +1,1 @@
-var app = angular.module("toDo",["ngRoute","ui.bootstrap"]);
+var app = angular.module("toDo", ["ngRoute", "ngDialog"]);

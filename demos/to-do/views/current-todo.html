@@ -1,4 +1,4 @@
-<div class="todo-container" ng-init="name=122">
+<div class="todo-container" ng-init="name=122" ng-controller="toDoController as todoCont">
     <input type="text" placeholder="Input your todo..." class="to-do" ng-model="todoCont.myToDo">
     <input type="submit" ng-show="todoCont.myToDo" class="submit" value="submit" ng-click="todoCont.submitForm()">
     <ul>
@@ -6,9 +6,9 @@
             <div class="text" ng-class="{focus:this.clicked}" contenteditable="{{this.clicked}}">
                 {{todo.text}}
             </div>
-            <div class="date-created">Created on : 12-05-2016</div>
+            <div class="date-created">Created on : {{todo.createdOn}}</div>
             <div class="ui-controls">
-                <span ng-click="todoCont.edit(this,todo);" ng-class="{save:this.clicked ,edit:!this.clicked }"></span>
+                <span ng-click="todoCont.edit(this,todo.todo);" ng-class="{save:this.clicked ,edit:!this.clicked }"></span>
                 <div class="complete">
                     <input type="checkbox" id="todoCompleted" ng-change="todoCont.change(todo,status)" ng-model="status">
                 </div>
